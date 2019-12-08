@@ -17,9 +17,9 @@ chmod +x *.sh
 ./create_conf.sh
 ./build_certs.sh
 ./setup_nginx.sh
+./install_pgsql.sh
 ./create_odoo_daemon.sh
 ./install_certs.sh 
-./install_pgsql.sh
 
 update-rc.d nginx defaults
 update-rc.d odoo defaults
