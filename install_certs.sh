@@ -8,23 +8,23 @@
 ### Requirement: apt install libnss3-tools
 ###
 
+# Install libnss3
+apt -y --no-install-recommends install libnss3-tools
 
 ###
 ### CA file to install (CUSTOMIZE!)
 ###
 
-certfile="LeNidRootCA.pem"
-certname="LeNidRootCA"
-targetuser=$1
+
 
 ###
 ### For cert8 (legacy - DBM)
 ###
 
-for certDB in $(find /home/$targetuser/ -name "cert8.db")
+for certDB in $(find /home/${COOP_USER}/ -name "cert8.db")
 do
     certdir=$(dirname ${certDB});
-    certutil -A -n "${certname}" -t "TCu,Cu,Tu" -i ${certfile} -d dbm:${certdir}
+    certutil -A -n "${CERT_NAME}" -t "TCu,Cu,Tu" -i ${CERT_NAME}.pem -d dbm:${certdir}
 done
 
 
@@ -32,8 +32,8 @@ done
 ### For cert9 (SQL)
 ###
 
-for certDB in $(find /home/$targetuser/ -name "cert9.db")
+for certDB in $(find /home/${COOP_USER}/ -name "cert9.db")
 do
     certdir=$(dirname ${certDB});
-    certutil -A -n "${certname}" -t "TCu,Cu,Tu" -i ${certfile} -d sql:${certdir}
+    certutil -A -n "${CERT_NAME}" -t "TCu,Cu,Tu" -i ${CERT_NAME}.pem -d sql:${certdir}
 done
