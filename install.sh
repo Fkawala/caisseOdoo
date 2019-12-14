@@ -3,7 +3,7 @@
 [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
 
 export ODOO_USER=root
-export CLONE_DIR=/home/francois/nid/odoo
+export CLONE_DIR=/usr/bin/odoo
 export ODOO_VERSION=11.0
 export REPO=https://github.com/odoo/odoo.git
 export COOP_USER=francois
