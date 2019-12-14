@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Install git
-apt -y --no-install-recommends install git
-
 # configure GIT
 git config --global user.email "cielenid@coopiteasy.be"
 git config --global user.name "cielenid"

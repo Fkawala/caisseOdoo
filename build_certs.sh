@@ -1,27 +1,9 @@
-# Create SSL root auth. and cert
-cat >> domains.ext <<EOL
-[req]
-req_extensions = v3_req
 
-[ v3_req ]
-authorityKeyIdentifier=keyid,issuer
-basicConstraints=CA:FALSE
-keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
-subjectAltName = @alt_names
+apt -y --no-install-recommends install libssl1.0.0
 
-[alt_names]
-DNS.1 = localhost
-EOL
- 
-
-# Comment out the RND file in HOME directory from openSSL configuration
-sed -i '13{s/^/#/}' /etc/ssl/openssl.cnf 
-
-openssl req -x509 -nodes -new -sha256 -days 1024 -newkey rsa:2048 -keyout ${CERT_NAME}.key -out ${CERT_NAME}.pem -subj "/C=CH/L=Genève/CN=Nid-Root-CA"
-openssl x509 -outform pem -in ${CERT_NAME}.pem -out ${CERT_NAME}.crt
-openssl req -new -nodes -newkey rsa:2048 -keyout posbox.key -out posbox.csr -subj "/C=CH/ST=Genf/L=Geneve/O=LeNid/CN=localhost"
-openssl x509 -req -sha256 -days 1024 -in posbox.csr -CA ${CERT_NAME}.pem -CAkey ${CERT_NAME}.key -CAcreateserial -extfile domains.ext -out posbox.crt
-
-sudo mkdir -p /etc/nginx/ssl
-sudo cp posbox.key /etc/nginx/ssl/
-sudo cp posbox.crt /etc/nginx/ssl/
+openssl genrsa -aes256 -out ca.key.pem 2048
+chmod 400 ca.key.pem
+openssl genrsa -out localhost.key.pem 2048
+openssl req -subj "/CN=${CERT_NAME}" -extensions v3_req -sha256 -new -key localhost.key.pem -out localhost.csr
+openssl req -new -x509 -subj "/CN=${CERT_NAME}" -extensions v3_ca -days 3650 -key ca.key.pem -sha256 -out ${CERT_NAME}.pem -config localhost.cnf
+openssl x509 -req -extensions v3_req -days 3650 -sha256 -in localhost.csr -CA ${CERT_NAME}.pem -CAkey ca.key.pem -CAcreateserial -out localhost.crt -extfile localhost.cnf

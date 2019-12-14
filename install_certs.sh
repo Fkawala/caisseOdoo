@@ -37,3 +37,11 @@ do
     certdir=$(dirname ${certDB});
     certutil -A -n "${CERT_NAME}" -t "TCu,Cu,Tu" -i ${CERT_NAME}.pem -d sql:${certdir}
 done
+
+###
+### NGINX
+###
+
+mkdir -p /etc/nginx/ssl
+cp localhost.key.pem /etc/nginx/ssl/posbox.key
+cp localhost.crt /etc/nginx/ssl/posbox.crt

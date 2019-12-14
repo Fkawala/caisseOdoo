@@ -3,40 +3,11 @@
 # Install nginx
 apt -y --no-install-recommends install nginx 
 
-# Nginx posbox config
-cat >/etc/nginx/sites-available/posbox <<EOL
-server{
-    listen 80;
-    server_name  localhost;
-    proxy_connect_timeout       600;
-    proxy_send_timeout          600;
-    proxy_read_timeout          600;
-    send_timeout                600;
-    location / {
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header Host \$http_host;
-        proxy_pass http://localhost:8069/;
-    }
-}
+# Stop ngnix daemon if any
+systemctl stop nginx
 
-server{
-    listen 443 ssl;
-    server_name localhost;
-    ssl_certificate /etc/nginx/ssl/posbox.crt;
-    ssl_certificate_key /etc/nginx/ssl/posbox.key;
-    proxy_connect_timeout       600;
-    proxy_send_timeout          600;
-    proxy_read_timeout          600;
-    send_timeout                600;
-    location / {
-        proxy_set_header X-Real-IP \$remote_addr;
-        proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
-        proxy_set_header Host \$http_host;
-        proxy_pass http://localhost:8069/;
-    }
-}
-EOL
+# Nginx posbox config
+envsub < posbox.nginx > /etc/nginx/sites-available/posbox
 
 ln -s /etc/nginx/sites-available/posbox /etc/nginx/sites-enabled/posbox
-systemctl restart nginx
+
