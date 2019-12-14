@@ -5,8 +5,8 @@
 export ODOO_USER=root
 export CLONE_DIR=/usr/bin/odoo
 export ODOO_VERSION=11.0
-export REPO=https://github.com/odoo/odoo.git
-export COOP_USER=francois
+export REPO=https://github.com/fkawala/odoo.git
+export COOP_USER=coop
 export CERT_NAME="LeNidRootCA"
 
 # Install git and other packages needed to run
@@ -22,11 +22,10 @@ chmod +x *.sh
 ./setup_nginx.sh
 ./build_certs.sh
 ./install_pgsql.sh
-#./create_odoo_daemon.sh
+./create_odoo_daemon.sh
 ./install_certs.sh 
 
 systemctl start nginx
 update-rc.d nginx defaults
 update-rc.d odoo defaults
 
-#rm *.key *.pem *.crt *.csr *.ext *.srl
