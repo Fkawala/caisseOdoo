@@ -7,7 +7,7 @@ apt -y --no-install-recommends install nginx
 systemctl stop nginx
 
 # Nginx posbox config
-envsub < posbox.nginx > /etc/nginx/sites-available/posbox
+cp posbox.nginx /etc/nginx/sites-available/posbox
 
 ln -s /etc/nginx/sites-available/posbox /etc/nginx/sites-enabled/posbox
 

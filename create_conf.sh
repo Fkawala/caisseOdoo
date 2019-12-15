@@ -1,4 +1,4 @@
 #!/bin/bash
 
 # Config file for posboxless
-envsub < posboxless.conf > ${CLONE_DIR}/posboxless.conf
+envsubst < posboxless.conf > ${CLONE_DIR}/posboxless.conf

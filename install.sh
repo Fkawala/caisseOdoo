@@ -2,7 +2,7 @@
 
 [ "$UID" -eq 0 ] || exec sudo bash "$0" "$@"
 
-export ODOO_USER=root
+export ODOO_USER=coop
 export CLONE_DIR=/usr/bin/odoo
 export ODOO_VERSION=11.0
 export REPO=https://github.com/fkawala/odoo.git
@@ -11,7 +11,7 @@ export CERT_NAME="LeNidRootCA"
 
 # Install git and other packages needed to run
 # the install scripts.
-apt -y --no-install-recommends install gettext
+apt -y --no-install-recommends install gettext-base
 
 chmod +x *.sh
 
