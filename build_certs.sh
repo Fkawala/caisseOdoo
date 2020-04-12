@@ -1,6 +1,7 @@
 
 apt -y --no-install-recommends install libssl1.0.0
 
+touch ~/.rnd
 openssl genrsa -aes256 -out ca.key.pem 2048
 chmod 400 ca.key.pem
 openssl genrsa -out localhost.key.pem 2048

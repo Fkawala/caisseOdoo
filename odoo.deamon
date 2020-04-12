@@ -13,7 +13,7 @@
 ### END INIT INFO
 
 PATH=/bin:/sbin:/usr/bin:/usr/local/bin
-DAEMON=${CLONE_DIR}/odoo-bin
+DAEMON=${CLONE_DIR}/venv/bin/python ${CLONE_DIR}/odoo-bin
 NAME=odoo
 DESC=odoo
 
